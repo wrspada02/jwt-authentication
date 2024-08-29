@@ -6,7 +6,7 @@ A project to train the main strategy to authenticate an user with JWT (JSON web 
 
 ## How to run
 1. Build the docker image `docker buildx build -t jwt-authentication .`
-2. Run image docker `docker run -p 3000:3000 jwt-authentication:latest`
+2. Run image docker `docker run -p 3000:3000 -e AUTH_JWT_CONSTANT=38Sht^0£6u£QmNxhSc jwt-authentication:latest`
 3. Send a request.
 
 ## Swagger API Documentation
