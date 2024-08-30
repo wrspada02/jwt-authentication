@@ -1,5 +1,7 @@
 FROM node:20.17-alpine
 
+RUN apk add --no-cache bash
+
 WORKDIR /app
 
 COPY . .

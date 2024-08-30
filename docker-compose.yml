@@ -1,0 +1,27 @@
+version: '3.5'
+services:
+  api:
+    build: .
+    container_name: api
+    hostname: api
+    env_file:
+      - .env
+    networks:
+      - app-network
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    command: bash -c 'while !</dev/tcp/db/27017; do sleep 1; done; npm run start'
+
+  db:
+    image: mongo:7.0
+    restart: always
+    container_name: db
+    hostname: db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
