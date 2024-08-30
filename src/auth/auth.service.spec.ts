@@ -24,7 +24,7 @@ describe('AuthService - unit tests', () => {
 
     jest
       .spyOn(userService, 'findOne')
-      .mockImplementation(() => new Promise((resolve) => resolve(userMock)));
+      .mockImplementation(() => Promise.resolve(userMock));
   });
 
   it('should throw 401 if not found the user by provided username', async () => {
