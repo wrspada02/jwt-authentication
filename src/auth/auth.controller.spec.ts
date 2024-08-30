@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { AppModule } from '../app.module';
 import { UsersService } from '../users/users.service';
 import { User } from '../models/User';
+import { AuthService } from './auth.service';
 
 const user = new User({
   username: 'maria',
@@ -12,6 +13,7 @@ const user = new User({
 
 describe('AuthController - unit tests', () => {
   let authController: AuthController;
+  let authService: AuthService;
   let userService: UsersService;
 
   beforeEach(async () => {
@@ -20,6 +22,7 @@ describe('AuthController - unit tests', () => {
     }).compile();
 
     authController = module.get<AuthController>(AuthController);
+    authService = module.get<AuthService>(AuthService);
     userService = module.get<UsersService>(UsersService);
   });
 
@@ -27,6 +30,12 @@ describe('AuthController - unit tests', () => {
     jest
       .spyOn(userService, 'findOne')
       .mockImplementation(() => Promise.resolve(null));
+
+    jest
+      .spyOn(authService, 'signIn')
+      .mockImplementation(() =>
+        Promise.resolve({ access_token: 'dhuasyghdsahgdas' }),
+      );
 
     try {
       await authController.signIn({
@@ -59,6 +68,12 @@ describe('AuthController - unit tests', () => {
     jest
       .spyOn(userService, 'findOne')
       .mockImplementation(() => Promise.resolve(user));
+
+    jest
+      .spyOn(authService, 'signIn')
+      .mockImplementation(() =>
+        Promise.resolve({ access_token: 'dhuasyghdsahgdas' }),
+      );
 
     const response = await authController.signIn({
       username: user.username,

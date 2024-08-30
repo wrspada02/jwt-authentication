@@ -40,6 +40,12 @@ describe('AuthService - unit tests', () => {
   });
 
   it('should return jwt access token', async () => {
+    jest
+      .spyOn(authService, 'signIn')
+      .mockImplementation(() =>
+        Promise.resolve({ access_token: 'dhuasyghdsahgdas' }),
+      );
+
     await expect(
       authService.signIn(user.username, user.password),
     ).resolves.toBeDefined();

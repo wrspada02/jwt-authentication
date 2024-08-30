@@ -3,6 +3,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 
@@ -18,12 +19,13 @@ export class AuthService {
     pass: string,
   ): Promise<{ access_token: string }> {
     const user = await this.usersService.findOne(username);
+    const isMatchPassword = await bcrypt.compare(pass, user.password);
 
     if (!user) {
       throw new NotFoundException();
     }
 
-    if (user?.password !== pass) {
+    if (!isMatchPassword) {
       throw new UnauthorizedException();
     }
 
