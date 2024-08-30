@@ -3,12 +3,12 @@ import { UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { AppModule } from '../app.module';
+import { User } from '../models/User';
 
-const userMock = {
-  userId: 1,
-  username: 'flip',
-  password: 'ooeiqwop231#@#',
-};
+const user = new User({
+  username: 'maria',
+  password: 'guess',
+});
 
 describe('AuthService - unit tests', () => {
   let authService: AuthService;
@@ -24,7 +24,7 @@ describe('AuthService - unit tests', () => {
 
     jest
       .spyOn(userService, 'findOne')
-      .mockImplementation(() => Promise.resolve(userMock));
+      .mockImplementation(() => Promise.resolve(user));
   });
 
   it('should throw 401 if not found the user by provided username', async () => {
@@ -35,13 +35,13 @@ describe('AuthService - unit tests', () => {
 
   it('should throw 401 if password does not match', async () => {
     await expect(
-      authService.signIn(userMock.username, 'dysagydsa'),
+      authService.signIn(user.username, 'dysagydsa'),
     ).rejects.toThrow(UnauthorizedException);
   });
 
   it('should return jwt access token', async () => {
     await expect(
-      authService.signIn(userMock.username, userMock.password),
+      authService.signIn(user.username, user.password),
     ).resolves.toBeDefined();
   });
 });

@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AppModule } from '../app.module';
 import { UsersService } from '../users/users.service';
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { User } from '../models/User';
 
-const user = {
-  userId: 1,
+const user = new User({
   username: 'maria',
   password: 'guess',
-};
+});
 
 describe('AuthController - unit tests', () => {
   let authController: AuthController;
