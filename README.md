@@ -8,9 +8,5 @@ A project to train the main strategy to authenticate an user with JWT (JSON web 
 1. Build the docker image `docker-compose up --build`
 3. Send a request.
 
-## Swagger API Documentation
-1. Be sure you have the swagger.yml file defined with the necessary data.
-2. Run `docker run -p 80:8080 -e SWAGGER_JSON=/app/swagger.yml -v $(pwd):/app swaggerapi/swagger-ui`.
-
 ## Technologies
 Docker, Nest.js, JWT.
